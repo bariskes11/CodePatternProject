@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 1143069189}
   - component: {fileID: 1143069188}
   m_Layer: 0
-  m_Name: AimedPoint
+  m_Name: TargetAssigner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
