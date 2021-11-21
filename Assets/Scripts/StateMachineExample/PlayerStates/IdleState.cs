@@ -6,27 +6,27 @@ public class IdleState : IState
 {
     PlayerStateManager _playerSM;
     TargetAssigner _targetAssigner;
-    Material _Mat;
-    Color _startingColor;
-    Color _idleStateColor=Color.black;
+    Material _material;
+    Color _stateColor=Color.yellow;
 
     public  IdleState(PlayerStateManager playerSM, Material material,TargetAssigner targetAssigner)
     {
+
         this._playerSM = playerSM;
-        this._Mat = material;
+        this._material = material;
         this._targetAssigner = targetAssigner;
     }
 
     public void Enter()
     {
-        Debug.Log($"STATE CHANGE  -  IDLE");
-        _targetAssigner.NewTargetAcquired += OnNewTargetAcuired;
+        Debug.Log("Idle State Enter");
+        _material.color = _stateColor;
+        _targetAssigner.MoveCommand += OnNewTargetAcuired;
     }
 
     public void Exit()
     {
-        _Mat.color = _startingColor;
-        _targetAssigner.NewTargetAcquired -= OnNewTargetAcuired;
+        _targetAssigner.MoveCommand -= OnNewTargetAcuired;
     }
 
     public void FixedTick()
@@ -36,11 +36,14 @@ public class IdleState : IState
 
     public void Tick()
     {
-        
+        //
+        Debug.Log("Idle State Tick");
     }
 
     void OnNewTargetAcuired(Vector3 newPosition)
     {
+
+        _playerSM.TargetPosition = newPosition;
         _playerSM.ChangeState(_playerSM.SearchState);
     }
     

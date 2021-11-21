@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class TargetAssigner : MonoBehaviour
 {
-    public Action<Vector3> NewTargetAcquired = delegate { };
+    // delegate for moving player towards point
+    public Action<Vector3> MoveCommand = delegate { };
+
 
     #region Fields
     Ray ray;
@@ -19,10 +21,16 @@ public class TargetAssigner : MonoBehaviour
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-
-                NewTargetAcquired.Invoke(hit.point);
+                MoveCommand.Invoke(hit.point);
+               
             }
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        // to see target gizmo
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(this.hit.point, 1F);
+    }
 }

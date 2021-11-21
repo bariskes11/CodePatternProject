@@ -26,7 +26,9 @@ public abstract class StateMachineBase : MonoBehaviour
             CurrentState.Exit();
         if (_previousState != null)
             _previousState = CurrentState;
-        CurrentState = newState;    
+        CurrentState = newState;
+        CurrentState.Enter();
+        _inTransition = false;
     }
     private void Update()
     {

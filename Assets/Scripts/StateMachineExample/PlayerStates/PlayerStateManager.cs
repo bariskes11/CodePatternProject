@@ -7,8 +7,8 @@ using UnityEngine;
 public class PlayerStateManager : StateMachineBase
 {
     #region Unity Fields
-    [SerializeField]
-    Material stateMaterial;
+  
+ 
     [SerializeField]
     TargetAssigner target;
     [SerializeField]
@@ -17,22 +17,31 @@ public class PlayerStateManager : StateMachineBase
     public float MoveSpeed;
 
     #endregion
+    #region Public States
     public IdleState IdleState { get; private set; }
     public SearchState SearchState { get; private set; }
     public FoundState FoundState { get; private set; }
-    public Vector3 TargetPosition { get; private set; }
+    #endregion
+    public Vector3 TargetPosition { get;  set; }
     #region Fields
+    Material stateMaterial;
     Rigidbody rbd;
     #endregion
     private void Awake()
     {
         rbd = this.GetComponent<Rigidbody>();
+        stateMaterial = this.GetComponent<MeshRenderer>().material;
         IdleState = new IdleState(this, stateMaterial, target);
         SearchState = new SearchState(this, stateMaterial, rbd);
-        FoundState = new FoundState();
+        FoundState = new FoundState(this,stateMaterial,target);
     }
     private void Start()
     {
         ChangeState(IdleState);
     }
+
+
+
+
+
 }
